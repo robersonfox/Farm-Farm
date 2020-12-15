@@ -14,7 +14,7 @@ public interface IFarmPort<T> {
 
     public void delete(Long id) throws Exception;
 
-    public List<T> all(FarmRequest request);
+    public List<T> all();
 
     public FarmResponse convert(T model);
 }

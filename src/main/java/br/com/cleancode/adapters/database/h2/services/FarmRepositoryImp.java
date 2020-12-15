@@ -93,7 +93,7 @@ public class FarmRepositoryImp implements IFarmPort<FarmModel> {
     }
 
     @Override
-    public List<FarmModel> all(FarmRequest request) {
+    public List<FarmModel> all() {
         return repository.findAll();
     }
 

@@ -3,6 +3,7 @@ package br.com.cleancode.adapters.database.h2.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -38,7 +39,7 @@ public class FarmModel {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("farm")
     @JoinColumn(name = "farm_animal_id", referencedColumnName = "id")
     private List<AnimalsModel> animals;

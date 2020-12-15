@@ -1,5 +1,7 @@
 package br.com.cleancode.adapters.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cleancode.usecases.farm.FarmRequest;
+import br.com.cleancode.usecases.farm.FarmResponse;
 import br.com.cleancode.usecases.farm.IFarm;
 import lombok.RequiredArgsConstructor;
 
@@ -48,10 +51,22 @@ public class FarmController {
     public ResponseEntity<?> deleteFarm(@RequestBody(required = true) FarmRequest request) {
         try {
             iFarm.delete(request);
+
+            return ResponseEntity.status(HttpStatus.OK).body(request);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(request);
         }
+    }
 
-        return ResponseEntity.status(HttpStatus.OK).body(request);
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<List<FarmResponse>> getAll() {
+        try {
+            var farms = iFarm.all();
+
+            return ResponseEntity.status(HttpStatus.OK).body(farms);
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 }

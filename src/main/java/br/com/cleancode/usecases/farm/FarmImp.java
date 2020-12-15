@@ -52,9 +52,8 @@ public class FarmImp implements IFarm {
     }
 
     @Override
-    public List<FarmResponse> all(FarmRequest request) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    public List<FarmResponse> all() {
 
+        return port.all();
+    }
 }
