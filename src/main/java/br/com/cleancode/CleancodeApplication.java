@@ -12,13 +12,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class CleancodeApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CleancodeApplication.class, args);
+    public static void main(String[] args) {
+        SpringApplication.run(CleancodeApplication.class, args);
 
-	}
-	
-	@PostConstruct
-	public void init(){
-		TimeZone.setDefault(TimeZone.getTimeZone("America/Sao_Paulo"));
-	}
+    }
+
+    @PostConstruct
+    public void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("America/Sao_Paulo"));
+    }
 }

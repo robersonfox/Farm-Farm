@@ -14,13 +14,7 @@ public class FarmImp implements IFarm {
     private final IFarmPort port;
 
     @Override
-    public FarmResponse getById(FarmRequest request) throws Exception {
-        if (request.getId() == null || request.getId() <= 0) {
-            return null;
-        }
-
-        Long id = request.getId();
-
+    public FarmResponse getById(Long id) throws Exception {
         var farm = port.getById(id);
 
         if (farm == null) {
@@ -49,14 +43,12 @@ public class FarmImp implements IFarm {
 
     @Override
     public FarmResponse update(FarmRequest request) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public FarmResponse delete(FarmRequest request) {
-        // TODO Auto-generated method stub
-        return null;
+    public void delete(FarmRequest request) throws Exception {
+        port.delete(request.getId());
     }
 
     @Override

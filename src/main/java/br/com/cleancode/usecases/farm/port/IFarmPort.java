@@ -12,7 +12,7 @@ public interface IFarmPort<T> {
 
     public T update(FarmRequest request);
 
-    public T delete(FarmRequest request);
+    public void delete(Long id) throws Exception;
 
     public List<T> all(FarmRequest request);
 

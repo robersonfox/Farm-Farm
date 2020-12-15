@@ -30,8 +30,7 @@ public class FarmRepositoryImp implements IFarmPort<FarmModel> {
     @Override
     public FarmModel getById(Long id) throws Exception {
         try {
-            var farm = repository.findById(id).orElseThrow(() -> new EntityNotFoundException(NAO_ENCONTRADO));
-            return farm;
+            return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(NAO_ENCONTRADO));
 
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -84,15 +83,18 @@ public class FarmRepositoryImp implements IFarmPort<FarmModel> {
     }
 
     @Override
-    public FarmModel delete(FarmRequest request) {
-        // TODO Auto-generated method stub
-        return null;
+    public void delete(Long id) throws Exception {
+        // Verifica se existe
+        var existModel = getById(id);
+
+        if (existModel != null) {
+            repository.delete(existModel);
+        }
     }
 
     @Override
     public List<FarmModel> all(FarmRequest request) {
-        // TODO Auto-generated method stub
-        return null;
+        return repository.findAll();
     }
 
     @Override
