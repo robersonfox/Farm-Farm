@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.com.cleancode.adapters.database.h2.models.FarmModel;
@@ -93,8 +94,10 @@ public class FarmRepositoryImp implements IFarmPort<FarmModel> {
     }
 
     @Override
-    public List<FarmModel> all() {
-        return repository.findAll();
+    public List<FarmModel> all(PageRequest pageable) {
+        var pages = repository.findAll(pageable);
+
+        return pages.getContent();
     }
 
     @Override

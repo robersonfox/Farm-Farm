@@ -58,10 +58,11 @@ public class FarmController {
         }
     }
 
-    @GetMapping(produces = "application/json")
-    public ResponseEntity<List<FarmResponse>> getAll() {
+    @GetMapping(path = "/all/page/{page}", produces = "application/json")
+    public ResponseEntity<List<FarmResponse>> getAll(@PathVariable(required = true) int page) {
+
         try {
-            var farms = iFarm.all();
+            var farms = iFarm.all(page);
 
             return ResponseEntity.status(HttpStatus.OK).body(farms);
 
@@ -69,4 +70,6 @@ public class FarmController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
+
 }

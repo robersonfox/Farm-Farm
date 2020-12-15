@@ -11,5 +11,5 @@ public interface IFarm {
 
     public void delete(FarmRequest request) throws Exception;
 
-    public List<FarmResponse> all();
+    public List<FarmResponse> all(int page);
 }

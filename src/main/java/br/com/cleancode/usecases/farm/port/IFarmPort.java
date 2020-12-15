@@ -2,6 +2,8 @@ package br.com.cleancode.usecases.farm.port;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+
 import br.com.cleancode.usecases.farm.FarmRequest;
 import br.com.cleancode.usecases.farm.FarmResponse;
 
@@ -14,7 +16,7 @@ public interface IFarmPort<T> {
 
     public void delete(Long id) throws Exception;
 
-    public List<T> all();
+    public List<T> all(PageRequest pageRequest);
 
     public FarmResponse convert(T model);
 }

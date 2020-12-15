@@ -2,6 +2,7 @@ package br.com.cleancode.usecases.farm;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.com.cleancode.usecases.farm.port.IFarmPort;
@@ -52,8 +53,11 @@ public class FarmImp implements IFarm {
     }
 
     @Override
-    public List<FarmResponse> all() {
+    public List<FarmResponse> all(int page) {
+        // Pagina dez em dez
+        page = page < 0 ? 0 : page;
+        PageRequest pageRequest = PageRequest.of(page, 10);
 
-        return port.all();
+        return port.all(pageRequest);
     }
 }
