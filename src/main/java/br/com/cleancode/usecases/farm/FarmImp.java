@@ -44,7 +44,17 @@ public class FarmImp implements IFarm {
 
     @Override
     public FarmResponse update(FarmRequest request) {
-        return null;
+        if (request.getName() == null) {
+            return null;
+        }
+
+        var farm = port.update(request);
+
+        if (farm == null) {
+            return null;
+        }
+
+        return port.convert(farm);
     }
 
     @Override

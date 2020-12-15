@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,5 +72,14 @@ public class FarmController {
         }
     }
 
+    @PatchMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> updateFarm(@RequestBody(required = true) FarmRequest request) {
+        try {
+            var farm = iFarm.update(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(farm);
 
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(request);
+        }
+    }
 }

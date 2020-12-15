@@ -62,21 +62,23 @@ public class FarmRepositoryImp implements IFarmPort<FarmModel> {
 
     @Override
     public FarmModel update(FarmRequest request) {
-        FarmModel model = null;
+        FarmModel existModel = null;
 
         try {
             // Verifica se existe
-            var existModel = getById(request.getId());
-
-            model = FarmModel.builder().name(existModel.getName()).id(existModel.getId()).build();
+            existModel = getById(request.getId());
 
         } catch (Exception e1) {
             log.error(NAO_ENCONTRADO);
             throw new IllegalArgumentException(e1.getMessage());
         }
 
+        // ajusto as propriedades que deverão ser atualizadas
+        existModel.setName(request.getName());
+
         try {
-            return repository.save(model);
+
+            return repository.save(existModel);
         } catch (Exception e) {
             log.error(IMPOSSIVEL_ATUALIZAR);
             throw new IllegalArgumentException(e.getMessage());
