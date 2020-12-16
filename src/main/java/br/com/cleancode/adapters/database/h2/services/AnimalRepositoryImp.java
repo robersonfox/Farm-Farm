@@ -58,6 +58,45 @@ public class AnimalRepositoryImp implements IAnimalPort<AnimalsModel> {
     }
 
     @Override
+    public boolean insert(List<AnimalRequest> request) throws Exception {
+        List<AnimalsModel> animals = new ArrayList<>();
+
+        // Constrói a lista com animais recebidos do request
+        for (AnimalRequest req : request) {
+            // Existe animal?
+            var opAnimal = existAnimal(req);
+            if (opAnimal.isPresent()) {
+                log.error(EXISTE);
+                throw new Exception(EXISTE);
+            }
+
+            // Existe a fazenda?
+            var opFarm = getFarm(req);
+            if (!opFarm.isPresent()) {
+                log.error(FARM_NAO_EXISTE);
+                throw new Exception(FARM_NAO_EXISTE);
+            }
+
+            AnimalsModel animal = AnimalsModel
+                .builder()
+                .tag(req.getTag())
+                .farm(opFarm.get())
+                .build();
+
+            animals.add(animal);
+        }
+
+        try {
+            repository.saveAll(animals);
+        } catch (Exception e) {
+            log.error(IMPOSSIVEL_INSERIR);
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
+        return true;
+    }
+
+    @Override
     public void delete(Long id) throws Exception {
         var entity = repository.findById(id);
 

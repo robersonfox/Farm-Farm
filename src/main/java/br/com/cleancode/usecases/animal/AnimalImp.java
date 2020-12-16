@@ -31,6 +31,24 @@ public class AnimalImp implements IAnimal {
     }
 
     @Override
+    public boolean insert(List<AnimalRequest> request) throws Exception {
+        // verifico se as propriedades foram preenchidas
+        if (request.isEmpty()) {
+            return false;
+        }
+
+        for (AnimalRequest animal : request) {
+            if (animal.getFarm() == null || animal.getTag() == null) {
+                return false;
+            }
+        }
+
+        var ok = port.insert(request);
+
+        return ok;
+    }
+
+    @Override
     public void delete(AnimalRequest request) throws Exception {
         port.delete(request.getId());
     }

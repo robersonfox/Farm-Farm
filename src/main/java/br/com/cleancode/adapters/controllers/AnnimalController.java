@@ -36,6 +36,18 @@ public class AnnimalController {
         }
     }
 
+    @PostMapping(path = "alot", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> insertAnimals(@RequestBody(required = true) List<AnimalRequest> request) {
+
+        try {
+            var animal = iAnimal.insert(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(animal);
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(request);
+        }
+    }
+
     @DeleteMapping
     public ResponseEntity<?> deleteAnimal(@RequestBody(required = true) AnimalRequest request) {
         try {

@@ -99,10 +99,19 @@ public class FarmRepositoryImp implements IFarmPort<FarmModel> {
     }
 
     @Override
-    public List<FarmModel> all(PageRequest pageable) {
+    public List<FarmResponse> all(PageRequest pageable) {
         var pages = repository.findAll(pageable);
 
-        return pages.getContent();
+        List<FarmResponse> farms = new ArrayList<>();
+
+        for (FarmModel farmModel : pages) {
+            var model = convert(farmModel);
+
+            farms.add(model);
+        }
+
+
+        return farms;
     }
 
     @Override
