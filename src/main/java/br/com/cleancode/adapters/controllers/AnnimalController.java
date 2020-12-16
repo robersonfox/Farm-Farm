@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.cleancode.usecases.animal.AnimalRequest;
 import br.com.cleancode.usecases.animal.AnimalResponse;
 import br.com.cleancode.usecases.animal.IAnimal;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,6 +27,11 @@ public class AnnimalController {
 
     private final IAnimal iAnimal;
 
+    @ApiOperation(value = "Insere um animal na base de dados")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Animal inserido no banco de dados"),
+        @ApiResponse(code = 400, message = "Foi gerada uma exceção"),
+    })
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> insertAnimal(@RequestBody(required = true) AnimalRequest request) {
 
@@ -36,6 +44,7 @@ public class AnnimalController {
         }
     }
 
+    @ApiOperation(value = "Insere uma lista de animais na base de dados")
     @PostMapping(path = "alot", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> insertAnimals(@RequestBody(required = true) List<AnimalRequest> request) {
 
@@ -48,7 +57,7 @@ public class AnnimalController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping(produces="application/json")
     public ResponseEntity<?> deleteAnimal(@RequestBody(required = true) AnimalRequest request) {
         try {
             iAnimal.delete(request);

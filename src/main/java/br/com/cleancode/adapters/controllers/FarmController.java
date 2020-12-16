@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.cleancode.usecases.farm.FarmRequest;
 import br.com.cleancode.usecases.farm.FarmResponse;
 import br.com.cleancode.usecases.farm.IFarm;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -37,6 +40,11 @@ public class FarmController {
         }
     }
 
+    @ApiOperation(value = "Insere uma fazenda na base de dados")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Fazenda inserida no banco de dados"),
+        @ApiResponse(code = 400, message = "Foi gerada uma exceção"),
+    })
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> insertFarm(@RequestBody(required = true) FarmRequest request) {
         try {
@@ -48,7 +56,7 @@ public class FarmController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping(produces="application/json")
     public ResponseEntity<?> deleteFarm(@RequestBody(required = true) FarmRequest request) {
         try {
             iFarm.delete(request);
