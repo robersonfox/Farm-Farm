@@ -1,5 +1,6 @@
 package br.com.cleancode.adapters.database.h2.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -8,8 +9,10 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import br.com.cleancode.adapters.database.h2.models.AnimalsModel;
 import br.com.cleancode.adapters.database.h2.models.FarmModel;
 import br.com.cleancode.adapters.database.h2.repository.IFarmRepository;
+import br.com.cleancode.usecases.animal.AnimalResponse;
 import br.com.cleancode.usecases.farm.FarmRequest;
 import br.com.cleancode.usecases.farm.FarmResponse;
 import br.com.cleancode.usecases.farm.port.IFarmPort;
@@ -104,6 +107,16 @@ public class FarmRepositoryImp implements IFarmPort<FarmModel> {
 
     @Override
     public FarmResponse convert(FarmModel model) {
-        return FarmResponse.builder().id(model.getId()).name(model.getName()).animals(model.getAnimals()).build();
+        List<AnimalResponse> animals = new ArrayList<>();
+
+        if (model.getAnimals() != null && !model.getAnimals().isEmpty()) {
+            for (AnimalsModel modelAnimals : model.getAnimals()) {
+                var animal = AnimalResponse.builder().id(modelAnimals.getId()).tag(modelAnimals.getTag()).build();
+
+                animals.add(animal);
+            }
+        }
+
+        return FarmResponse.builder().id(model.getId()).name(model.getName()).animals(animals).build();
     }
 }

@@ -1,15 +1,25 @@
 package br.com.cleancode.usecases.farm;
 
+import java.io.Serializable;
 import java.util.List;
 
-import br.com.cleancode.adapters.database.h2.models.AnimalsModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.cleancode.usecases.animal.AnimalResponse;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class FarmResponse {
+public class FarmResponse implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String name;
-    private List<AnimalsModel> animals;
+
+    @JsonIgnore
+    private List<AnimalResponse> animals;
 }

@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -35,6 +37,7 @@ public class AnimalsModel {
 
     @OneToOne
     @JoinColumn(referencedColumnName = "id")
+    @JsonIgnoreProperties("animals")
     private FarmModel farm;
 
     @Column(unique = true)
@@ -49,4 +52,8 @@ public class AnimalsModel {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updated_at;
+
+    public AnimalsModel(String tag) {
+        this.tag = tag;
+    }
 }
