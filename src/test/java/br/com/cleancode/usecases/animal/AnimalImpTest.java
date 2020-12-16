@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -37,9 +39,9 @@ public class AnimalImpTest {
     public void deveriaInserirUmRequest() throws Exception {
         when(port.insert(request)).thenReturn(new Object());
 
-        var retorno = inject.insert(request);
+        inject.insert(request);
 
-        assertNotNull(retorno);
+        verify(port, times(1)).insert(request);
     }
 
     @Test

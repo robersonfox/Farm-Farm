@@ -14,7 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import br.com.cleancode.usecases.farm.port.IFarmPort;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class FarmImpTest {
     @InjectMocks
     private FarmImp inject;
